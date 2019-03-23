@@ -3,7 +3,7 @@
 #include "resource.h"
 #include <iostream>
 #include <sstream>
-
+#
 
 //热键ID
 #define IDK_BEGIN                               40012
@@ -18,6 +18,8 @@ HWND rightButton;
 
 HWND intervalEdit;
 int interval = 10;
+
+HWND stateText;
 
 using std::stringstream;
 stringstream ss;
@@ -41,6 +43,9 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
     case WM_INITDIALOG:
     {
+        stateText = GetDlgItem(hwndDlg, IDT_STATE);
+        SetWindowText(stateText, "OFF");
+
         ss << interval;
         intervalEdit = GetDlgItem(hwndDlg, IDE_INTERVAL);
         SendMessage(intervalEdit, EM_REPLACESEL, 0,
@@ -63,6 +68,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_CLOSE:
     {
+        SetWindowText(stateText, "OFF");
         KillTimer(hwndDlg, IDT_TIMER);
         //注销热键
         UnregisterHotKey(hwndDlg, IDK_BEGIN);
@@ -80,6 +86,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             timerClick(hwndDlg);
             break;
         case IDB_END:
+            SetWindowText(stateText, "OFF");
             KillTimer(hwndDlg, IDT_TIMER);
             break;
         }
@@ -94,6 +101,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
 
         case IDK_END:
+            SetWindowText(stateText, "OFF");
             KillTimer(hwndDlg, IDT_TIMER);
             break;
         }
@@ -127,6 +135,8 @@ void timerClick(HWND hwndDlg)
         MOUSEEVENTF_DOWN = MOUSEEVENTF_RIGHTDOWN;
         MOUSEEVENTF_UP=MOUSEEVENTF_RIGHTUP;
     }
+
+    SetWindowText(stateText, "ON");
     SetTimer(hwndDlg, IDT_TIMER, interval, TimerProc);
 }
 
