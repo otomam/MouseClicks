@@ -1,9 +1,7 @@
 #include <windows.h>
 #include <commctrl.h>
 #include "resource.h"
-#include <iostream>
 #include <sstream>
-#
 
 //热键ID
 #define IDK_BEGIN                               40012
@@ -11,8 +9,10 @@
 
 #define IDT_TIMER                                 40020
 
+//鼠标坐标
 POINT pt = {0,0};
 
+//单选按钮
 HWND leftButton;
 HWND rightButton;
 
@@ -20,10 +20,13 @@ HWND intervalEdit;
 int interval = 10;
 
 HWND stateText;
+const TCHAR* soff = TEXT("未启用");
+const TCHAR* son = TEXT("启用中");
 
 using std::stringstream;
 stringstream ss;
 
+//鼠标左右键选择
 int MOUSEEVENTF_DOWN;
 int MOUSEEVENTF_UP;
 
@@ -34,6 +37,7 @@ void timerClick(HWND hwndDlg);
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     InitCommonControls();
+    LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICONT));
     return DialogBox(hInstance, MAKEINTRESOURCE(DLG_MAIN), NULL, (DLGPROC)DlgMain);
 }
 
@@ -44,7 +48,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_INITDIALOG:
     {
         stateText = GetDlgItem(hwndDlg, IDT_STATE);
-        SetWindowText(stateText, "OFF");
+        SetWindowText(stateText, soff);
 
         ss << interval;
         intervalEdit = GetDlgItem(hwndDlg, IDE_INTERVAL);
@@ -68,7 +72,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_CLOSE:
     {
-        SetWindowText(stateText, "OFF");
+        SetWindowText(stateText, soff);
         KillTimer(hwndDlg, IDT_TIMER);
         //注销热键
         UnregisterHotKey(hwndDlg, IDK_BEGIN);
@@ -86,7 +90,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             timerClick(hwndDlg);
             break;
         case IDB_END:
-            SetWindowText(stateText, "OFF");
+            SetWindowText(stateText, soff);
             KillTimer(hwndDlg, IDT_TIMER);
             break;
         }
@@ -101,7 +105,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
 
         case IDK_END:
-            SetWindowText(stateText, "OFF");
+            SetWindowText(stateText, soff);
             KillTimer(hwndDlg, IDT_TIMER);
             break;
         }
@@ -136,7 +140,7 @@ void timerClick(HWND hwndDlg)
         MOUSEEVENTF_UP=MOUSEEVENTF_RIGHTUP;
     }
 
-    SetWindowText(stateText, "ON");
+    SetWindowText(stateText, son);
     SetTimer(hwndDlg, IDT_TIMER, interval, TimerProc);
 }
 
