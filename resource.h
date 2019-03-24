@@ -9,4 +9,4 @@
 #define IDB_END                                 40003
 #define IDR_RIGHT                               40005
 #define IDE_INTERVAL                            40007
-#define IDI_ICONT                               40008
+#define IDI_APP                                 40008

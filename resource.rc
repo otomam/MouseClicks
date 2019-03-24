@@ -36,7 +36,7 @@ FONT 8, "Ms Shell Dlg"
 // Icon resources
 //
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
-IDI_ICONT          ICON           "mouse.ico"
+IDI_APP            ICON           "mouse.ico"
 
 
 
