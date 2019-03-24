@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1553422451 source:d:\dev\_workspace\cb\mouse\main.cpp
+1553426512 source:d:\dev\_workspace\cb\mouse\main.cpp
 	<windows.h>
 	<commctrl.h>
 	"resource.h"
 
-1553422436 d:\dev\_workspace\cb\mouse\resource.h
+1553426355 d:\dev\_workspace\cb\mouse\resource.h
 
-1553422436 source:d:\dev\_workspace\cb\mouse\resource.rc
+1553426355 source:d:\dev\_workspace\cb\mouse\resource.rc
 	<windows.h>
 	<commctrl.h>
 	<richedit.h>

@@ -16,7 +16,7 @@ HWND leftButton;
 HWND rightButton;
 
 HWND intervalEdit;
-int interval = 10;
+int interval = 100;
 
 HWND stateText;
 const TCHAR* soff = TEXT("未启用");
@@ -44,7 +44,7 @@ BOOL CALLBACK DlgMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
     {
     case WM_INITDIALOG:
     {
-        //默认间隔值
+        //默认间隔
         SetDlgItemInt(hwndDlg, IDE_INTERVAL, interval, false);
 
         //默认状态
@@ -140,6 +140,9 @@ void timerStop(HWND hwndDlg)
 void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT nTimerid, DWORD dwTime)
 {
     //鼠标连击
+    if(IsDlgButtonChecked(hWnd, IDC_FIXED))
+        SetCursorPos(pt.x, pt.y);
+    //？
     mouse_event(MOUSEEVENTF_DOWN, pt.x, pt.y, 0, 0);
     mouse_event(MOUSEEVENTF_UP, pt.x, pt.y, 0, 0);
 }
